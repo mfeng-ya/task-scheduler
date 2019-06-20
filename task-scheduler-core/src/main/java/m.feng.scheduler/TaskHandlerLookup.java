@@ -3,13 +3,18 @@ package m.feng.scheduler;
 import m.feng.scheduler.annotation.Task;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 /**
  * @Auther: wht
  * @Date: 2019/6/15 17:44
  * @Description:
  */
-public interface TaskHandlerLookup {
+public interface TaskHandlerLookup extends Function<Object, TaskHandler<?>> {
+
+    default TaskHandler<?> apply(Object t) {
+        return lookup(t);
+    }
 
     <T> TaskHandler<T> lookup(T task);
 

@@ -17,6 +17,7 @@ package m.feng.scheduler;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.function.Supplier;
 
 /**
  * 持久化需自己实现 比如使用redis
@@ -24,7 +25,7 @@ import java.util.PriorityQueue;
  * @author wht
  * @date 2018年12月13日
  */
-public interface SortedTaskQueue {
+public interface SortedTaskQueue extends Supplier<TaskDefinition> {
 
     /**
      * <p>
@@ -41,6 +42,10 @@ public interface SortedTaskQueue {
     boolean remove(String taskId);
 
     void clear();
+
+    default TaskDefinition get() {
+        return next();
+    }
 
     /**
      * <p>
